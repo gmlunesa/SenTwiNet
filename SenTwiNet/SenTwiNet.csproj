@@ -1,9 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="1.7.1" />
+  </ItemGroup>
+  <ItemGroup Label="MLModel">
+    <None Include="MLModel.consumption.cs">
+      <DependentUpon>MLModel.mbconfig</DependentUpon>
+    </None>
+    <None Include="MLModel.training.cs">
+      <DependentUpon>MLModel.mbconfig</DependentUpon>
+    </None>
+    <None Include="MLModel.zip">
+      <DependentUpon>MLModel.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

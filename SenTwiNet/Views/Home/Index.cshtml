@@ -1,8 +1,57 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model SenTwiNet.Models.SentimentPredictionModel;
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row align-items-center g-lg-5 py-5">
+    <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 fw-bold lh-1 mb-3">Sentiment analysis with ML.NET</h1>
+        <p class="col-lg-10 fs-4">
+            This project is bootstrapped with ML.NET and ASP.NET MVC. Hosted with Azure App Service. Dataset sourced from Kaggle. Repository is open-sourced on Github.
+        </p>
+        <div class="mb-4 d-grid gap-2 d-md-flex justify-content-md-start">
+          <a href="https://github.com/gmlunesa/SenTwiNet" class="btn btn-primary btn-lg px-4 me-md-2" target="_blank" rel="noopener noreferrer">Source</a>
+          <a href="https://dotnet.microsoft.com/en-us/apps/machinelearning-ai/ml-dotnet" class="btn btn-outline-secondary btn-lg px-4" target="_blank" rel="noopener noreferrer">Learn more about ML.NET</a>
+        </div>
+    </div>
+    <div class="col-md-10 mx-auto col-lg-5">
+        <form class="p-4 p-md-5 border rounded-3 bg-light" asp-controller="Home" asp-action="Index" method="post">
+            <div class="mb-3">
+                <label for="SentimentText" class="form-label">Please provide text.</label>
+                <textarea class="form-control" id="SentimentText" asp-for="SentimentText" name="SentimentText" placeholder="I love lemons." rows="3"></textarea>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Analyze</button>
+            <hr class="my-4">
+
+            @if(Model != null)
+            {
+                <table class="table table-responsive">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Sentiment Analysis</th>
+                            <td>
+                                @if(Model.PredictedLabel.ToUpper() == "POSITIVE")
+                                {
+                                    <span class="badge rounded-pill bg-success">@Model.PredictedLabel.ToUpper()</span>
+                                }
+                                else if(Model.PredictedLabel.ToUpper() == "NEUTRAL")
+                                {
+                                    <span class="badge rounded-pill bg-warning text-dark">@Model.PredictedLabel.ToUpper()</span>
+                                }
+                                else
+                                {
+                                    <span class="badge rounded-pill bg-danger">@Model.PredictedLabel.ToUpper()</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Text</th>
+                            <td>@Model.SentimentText</td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        </form>
+    </div>
 </div>
